@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <sstream>
 #include "Process.h"
 #include "CPUScheduler.h"
 
@@ -13,13 +14,24 @@ std::vector<Process> readProcesses(const std::string& inputFile) {
         return processes;
     }
 
-    int  arrivalTime, priority, cpuBurst;
-    int id = 1;
-    while (file >> arrivalTime >> cpuBurst >> priority) {
-        processes.emplace_back(id, arrivalTime, priority, cpuBurst);
-        std::cout << "Read Process - ID: " << id << ", Arrival Time: " << arrivalTime 
-                  << ", Priority: " << priority << ", CPU Burst: " << cpuBurst << std::endl;
-        id++;
+    std::string line;
+    // Skip the header line
+    std::getline(file, line);
+
+    int arrivalTime, cpuBurst, priority;
+    int id = 1; // ID generator starting from 1
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        if (iss >> arrivalTime >> cpuBurst >> priority) {
+            processes.emplace_back(id, arrivalTime, priority, cpuBurst);
+            id++;
+        } else {
+            std::cerr << "Error reading line: " << line << std::endl;
+        }
+    }
+
+    if (processes.empty()) {
+        std::cerr << "No processes read from the file." << std::endl;
     }
 
     return processes;
@@ -34,6 +46,11 @@ int main(int argc, char* argv[]) {
     std::string inputFile = argv[1];
     std::string algorithm = argv[2];
     std::vector<Process> processes = readProcesses(inputFile);
+
+    if (processes.empty()) {
+        std::cerr << "No processes to schedule." << std::endl;
+        return 1;
+    }
 
     if (algorithm == "FIFO") {
         fifoSchedule(processes);
