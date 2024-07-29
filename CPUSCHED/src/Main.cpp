@@ -13,9 +13,13 @@ std::vector<Process> readProcesses(const std::string& inputFile) {
         return processes;
     }
 
-    int id, arrivalTime, priority, cpuBurst;
-    while (file >> id >> arrivalTime >> priority >> cpuBurst) {
+    int  arrivalTime, priority, cpuBurst;
+    int id = 1;
+    while (file >> arrivalTime >> cpuBurst >> priority) {
         processes.emplace_back(id, arrivalTime, priority, cpuBurst);
+        std::cout << "Read Process - ID: " << id << ", Arrival Time: " << arrivalTime 
+                  << ", Priority: " << priority << ", CPU Burst: " << cpuBurst << std::endl;
+        id++;
     }
 
     return processes;
