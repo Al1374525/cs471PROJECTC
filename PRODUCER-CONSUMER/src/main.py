@@ -2,6 +2,7 @@ import threading
 import time
 import random
 from queue import Queue
+import os
 
 class ProducerConsumer:
     def __init__(self, num_producers, num_consumers, buffer_size):
@@ -55,9 +56,14 @@ def main():
     pc.start()
 
     #Run the simulation for a certain time
+    #we will be testing different time sleeps
+
     time.sleep(5)
 
     pc.stop()
+
+    output_dir = "../output"
+    os.makedirs(output_dir, exist_ok=True)
 
     #print results
     with open("../output/results.txt", "w") as f:
