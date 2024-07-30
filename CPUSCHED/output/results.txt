@@ -1,0 +1,7 @@
+Number of processes: 500
+Total elapsed time: 14744
+Throughput: 0.0339121
+CPU utilization: 71.6088%
+Average Waiting Time: 17.884
+Average Turnaround Time: 39
+Average Response Time: 17.884

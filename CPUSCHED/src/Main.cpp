@@ -3,8 +3,10 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <sys/stat.h> 
 #include "Process.h"
 #include "CPUScheduler.h"
+#include <filesystem>
 
 std::vector<Process> readProcesses(const std::string& inputFile) {
     std::vector<Process> processes;
@@ -37,6 +39,16 @@ std::vector<Process> readProcesses(const std::string& inputFile) {
     return processes;
 }
 
+void writeResultsToFile(const std::string& filename, const std::string& results) {
+    std::ofstream outFile(filename);
+    if (outFile.is_open()) {
+        outFile << results;
+        outFile.close();
+    } else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+    }
+}
+
 int main(int argc, char* argv[]) {
     if (argc != 3) {
         std::cout << "Usage: ./Main <input file> <scheduling algorithm>" << std::endl;
@@ -52,15 +64,27 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    // Capture the output in a string
+    std::ostringstream results;
+
     if (algorithm == "FIFO") {
-        fifoSchedule(processes);
+        fifoSchedule(processes, results);
     } else if (algorithm == "SJF") {
-        sjfSchedule(processes);
+        sjfSchedule(processes, results);
     } else if (algorithm == "PRIORITY") {
-        prioritySchedule(processes);
+        prioritySchedule(processes, results);
     } else {
         std::cout << "Unknown algorithm: " << algorithm << std::endl;
+        return 1;
     }
+
+
+    // Write results to a file
+    std::string outputFile = "../output/results.txt";
+    writeResultsToFile(outputFile, results.str());
+
+    // Also print the results to the console
+    std::cout << results.str();
 
     return 0;
 }
