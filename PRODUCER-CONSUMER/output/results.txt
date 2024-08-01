@@ -1,1 +1,8 @@
-Simulation complete
+Results:
+ buffer_size  num_items  num_producers  num_consumers  sleep_time  turnaround_time
+           5        100              2              2         0.5        16.149722
+          10        100              2              2         0.5        16.875052
+          20        100              2              2         0.5        16.692897
+           5        100              3              3         0.3         7.412456
+          10        100              3              3         0.3         7.200626
+          20        100              3              3         0.3         7.310284
