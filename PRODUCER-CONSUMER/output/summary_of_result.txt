@@ -1,0 +1,33 @@
+Summary of Results: The following table describes the behavior of the Producer-Consumer problem under various conditions characterized by different buffer sizes, number of producers, number of consumers, sleep times and the measured turnaround times.
+
+Buffer Size Influence: With increasing buffer size (from 5 to 20 with 2 producers and 2 consumers), turnaround time decreases. For example, for a sleeping time of 0.5 seconds:
+
+Buffer size 5: 17.29 seconds
+
+Buffer size 10: 16.53 seconds
+
+Buffer size 20: 15.95 seconds
+
+The trend shows that the bigger buffer size reduces waiting times for producers and consumers, hence improving efficiency in processing items.
+
+Number of Producers and Consumers: Because of a greater number of producers and consumers in the system (3 in number as opposed to only 2 in each case), the turnaround times are sharply reduced compared to cases where only a few producers and consumers exist. For example, with a buffer size of 10 and a sleep time of 0.3 seconds:
+
+2 producers, 2 consumers: Turnaround times are in the range of 16-18 seconds.
+
+3 producers, 3 consumers: The time taken to turn around is around 7.14 seconds.
+
+This shows that the more there is an increase in the concurrency (more producers and consumers) the buffer becomes more utilized; hence, the whole process becomes faster.
+
+Effect of Sleep Time: There is a reduction in the sleeping time from 0.5 to 0.3 seconds; there is also a great decrease in the turnaround times. For example, for 3 producers and 3 consumers:
+
+Buffer size 5: Drops from 17.29 s (at sleep time 0.5) to 7.69 s (at sleep time 0.3)
+
+This trend is observed for all buffer sizes. The lower the sleep time, the more active the producers and consumers are, which gives the system room to speed up its processing of items.
+
+Analysis: Buffer Size With a larger buffer size, the likelihood of a producer waiting for a moment when it can place an item in a full buffer decreases. Similarly, for consumers, it decreases the likelihood of finding an empty buffer. Thus, it increases system throughput.
+
+Number of Threads: More producers and consumers can deal with items at the same time. It is especially effective if the buffer size and sleep times are configured optimally to reduce idle times.
+
+Sleep Time: Lesser sleep time of threads indicates less time they spend in idle states; this means they can produce and consume things much faster, which quite significantly improves efficiency in a system.
+
+Conclusion The best performance of a Producer-Consumer scenario depends hugely on the balance struck between the buffer size, number of active threads and their operational timings. Larger buffers and more threads may help in improving throughput up to a point where other factors such as context switching may start impairing the performance. Optimally selected sleep times in accordance with the workload and system capabilities should be developed to achieve maximum efficiency without inducing an excessively high CPU load.
